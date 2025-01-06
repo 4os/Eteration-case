@@ -34,8 +34,26 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
+				Tests/Eteration_CaseTests.swift,
+				Tests/UITests/Eteration_CaseUITests.swift,
+				Tests/UITests/Eteration_CaseUITestsLaunchTests.swift,
 			);
 			target = 972BDDA32D2C0B8700753AB9 /* Eteration-Case */;
+		};
+		972BDEE32D2C226B00753AB9 /* Exceptions for "Eteration-Case" folder in "Eteration-CaseTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Tests/Eteration_CaseTests.swift,
+			);
+			target = 972BDDBC2D2C0B8900753AB9 /* Eteration-CaseTests */;
+		};
+		972BDEE92D2C226F00753AB9 /* Exceptions for "Eteration-Case" folder in "Eteration-CaseUITests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Tests/UITests/Eteration_CaseUITests.swift,
+				Tests/UITests/Eteration_CaseUITestsLaunchTests.swift,
+			);
+			target = 972BDDC62D2C0B8900753AB9 /* Eteration-CaseUITests */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -44,18 +62,10 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				972BDDCF2D2C0B8900753AB9 /* Exceptions for "Eteration-Case" folder in "Eteration-Case" target */,
+				972BDEE32D2C226B00753AB9 /* Exceptions for "Eteration-Case" folder in "Eteration-CaseTests" target */,
+				972BDEE92D2C226F00753AB9 /* Exceptions for "Eteration-Case" folder in "Eteration-CaseUITests" target */,
 			);
 			path = "Eteration-Case";
-			sourceTree = "<group>";
-		};
-		972BDDC02D2C0B8900753AB9 /* Eteration-CaseTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "Eteration-CaseTests";
-			sourceTree = "<group>";
-		};
-		972BDDCA2D2C0B8900753AB9 /* Eteration-CaseUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "Eteration-CaseUITests";
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -89,8 +99,6 @@
 			isa = PBXGroup;
 			children = (
 				972BDDA62D2C0B8700753AB9 /* Eteration-Case */,
-				972BDDC02D2C0B8900753AB9 /* Eteration-CaseTests */,
-				972BDDCA2D2C0B8900753AB9 /* Eteration-CaseUITests */,
 				972BDDA52D2C0B8700753AB9 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -143,9 +151,6 @@
 			dependencies = (
 				972BDDBF2D2C0B8900753AB9 /* PBXTargetDependency */,
 			);
-			fileSystemSynchronizedGroups = (
-				972BDDC02D2C0B8900753AB9 /* Eteration-CaseTests */,
-			);
 			name = "Eteration-CaseTests";
 			packageProductDependencies = (
 			);
@@ -165,9 +170,6 @@
 			);
 			dependencies = (
 				972BDDC92D2C0B8900753AB9 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				972BDDCA2D2C0B8900753AB9 /* Eteration-CaseUITests */,
 			);
 			name = "Eteration-CaseUITests";
 			packageProductDependencies = (
@@ -294,7 +296,6 @@
 				INFOPLIST_FILE = "Eteration-Case/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -322,7 +323,6 @@
 				INFOPLIST_FILE = "Eteration-Case/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
