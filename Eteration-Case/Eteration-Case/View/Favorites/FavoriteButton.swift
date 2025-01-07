@@ -39,8 +39,8 @@ class FavoriteButton: UIButton {
     }
 
     private func updateAppearance() {
-        let imageName = isFavorited ? "star.fill" : "star"
-        let image = UIImage(systemName: imageName)?.withTintColor(.systemYellow, renderingMode: .alwaysOriginal)
+        let imageName = isFavorited ? "heart.fill" : "heart"
+        let image = UIImage(systemName: imageName)?.withTintColor(.systemBlue, renderingMode: .alwaysOriginal)
         setImage(image, for: .normal)
         contentHorizontalAlignment = .fill
         contentVerticalAlignment = .fill
