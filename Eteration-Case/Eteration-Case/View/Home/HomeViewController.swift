@@ -321,12 +321,12 @@ extension HomeViewController: HomeDataSourceDelegate {
         navigationController?.pushViewController(detailVC, animated: true)
     }
 
-    func didTapAddToCard(_ product: ProductModel) {
-        if CardManager.shared.isProductInCard(productId: product.id) {
-            showAlert(title: "Already Added", message: "This product is already in your Card.")
+    func didTapAddToCart(_ product: ProductModel) {
+        if CartManager.shared.isProductInCart(productId: product.id) {
+            showAlert(title: "Already Added", message: "This product is already in your Cart.")
         } else {
-            CardManager.shared.addToCard(productId: product.id, cardCount: 1)
-            showAlert(title: "Success", message: "Product added to your card.")
+            CartManager.shared.addToCart(productId: product.id, cartCount: 1)
+            showAlert(title: "Success", message: "Product added to your cart.")
         }
     }
     

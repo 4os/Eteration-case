@@ -1,5 +1,5 @@
 //
-//  CardManager.swift
+//  CartManager.swift
 //  Eteration-Case
 //
 //  Created by 4os on 7.01.2025.
@@ -8,9 +8,9 @@
 import CoreData
 import UIKit
 
-class CardManager {
+class CartManager {
 
-    static let shared = CardManager()
+    static let shared = CartManager()
     private let context: NSManagedObjectContext
 
     private init() {
@@ -20,70 +20,70 @@ class CardManager {
         self.context = appDelegate.persistentContainer.viewContext
     }
 
-    // MARK: - Add to Card
-    func addToCard(productId: String, cardCount: Int = 1) {
-        if let existingItem = fetchCardItem(by: productId) {
-            existingItem.cardCount += Int16(cardCount)
+    // MARK: - Add to Cart
+    func addToCart(productId: String, cartCount: Int = 1) {
+        if let existingItem = fetchCartItem(by: productId) {
+            existingItem.cartCount += Int16(cartCount)
         } else {
-            let newItem = CardItem(context: context)
+            let newItem = CartItem(context: context)
             newItem.id = productId
-            newItem.cardCount = Int16(cardCount)
+            newItem.cartCount = Int16(cartCount)
         }
 
         saveContext()
-        NotificationCenter.default.post(name: .cardUpdated, object: nil)
+        NotificationCenter.default.post(name: .cartUpdated, object: nil)
     }
 
-    // MARK: - Remove from Card
-    func removeFromCard(productId: String) {
-        if let item = fetchCardItem(by: productId) {
+    // MARK: - Remove from Cart
+    func removeFromCart(productId: String) {
+        if let item = fetchCartItem(by: productId) {
             context.delete(item)
             saveContext()
-            NotificationCenter.default.post(name: .cardUpdated, object: nil)
+            NotificationCenter.default.post(name: .cartUpdated, object: nil)
         }
     }
 
-    // MARK: - Fetch Card Items
-    func fetchCardItems() -> [CardItem] {
-        let fetchRequest: NSFetchRequest<CardItem> = CardItem.fetchRequest()
+    // MARK: - Fetch Cart Items
+    func fetchCartItems() -> [CartItem] {
+        let fetchRequest: NSFetchRequest<CartItem> = CartItem.fetchRequest()
         do {
             return try context.fetch(fetchRequest)
         } catch {
-            print("Failed to fetch card items: \(error)")
+            print("Failed to fetch cart items: \(error)")
             return []
         }
     }
 
-    // MARK: - Fetch Card Item by ID
-    private func fetchCardItem(by productId: String) -> CardItem? {
-        let fetchRequest: NSFetchRequest<CardItem> = CardItem.fetchRequest()
+    // MARK: - Fetch Cart Item by ID
+    private func fetchCartItem(by productId: String) -> CartItem? {
+        let fetchRequest: NSFetchRequest<CartItem> = CartItem.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id == %@", productId)
         do {
             return try context.fetch(fetchRequest).first
         } catch {
-            print("Failed to fetch card item with id \(productId): \(error)")
+            print("Failed to fetch cart item with id \(productId): \(error)")
             return nil
         }
     }
 
-    // MARK: - Clear Card
-    func clearCard() {
-        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = CardItem.fetchRequest()
+    // MARK: - Clear Cart
+    func clearCart() {
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = CartItem.fetchRequest()
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
         do {
             try context.execute(deleteRequest)
             saveContext()
-            NotificationCenter.default.post(name: .cardUpdated, object: nil)
+            NotificationCenter.default.post(name: .cartUpdated, object: nil)
         } catch {
-            print("Failed to clear card: \(error)")
+            print("Failed to clear cart: \(error)")
         }
     }
 
-    func increaseCardCount(for id: String) {
+    func increaseCartCount(for id: String) {
            context.performAndWait { [weak self] in
                guard let self = self else { return }
-               if let item = fetchCardItem(by: id) {
-                   item.cardCount += 1
+               if let item = fetchCartItem(by: id) {
+                   item.cartCount += 1
                    saveContext()
                    DispatchQueue.main.async {
                        NotificationCenter.default.post(name: .countChanged, object: nil)
@@ -92,13 +92,13 @@ class CardManager {
            }
        }
 
-    func decreaseCardCount(for id: String) {
+    func decreaseCartCount(for id: String) {
         context.performAndWait { [weak self] in
             guard let self = self else { return }
-            if let item = fetchCardItem(by: id) {
-                item.cardCount -= 1
-                if item.cardCount <= 0 {
-                    removeFromCard(productId: id)
+            if let item = fetchCartItem(by: id) {
+                item.cartCount -= 1
+                if item.cartCount <= 0 {
+                    removeFromCart(productId: id)
                 } else {
                     saveContext()
                 }
@@ -109,9 +109,9 @@ class CardManager {
         }
     }
     
-    // MARK: - Is Product in Card
-    func isProductInCard(productId: String) -> Bool {
-        return fetchCardItem(by: productId) != nil
+    // MARK: - Is Product in Cart
+    func isProductInCart(productId: String) -> Bool {
+        return fetchCartItem(by: productId) != nil
     }
 
     // MARK: - Save Context
@@ -123,8 +123,8 @@ class CardManager {
         }
     }
     
-    func totalCardItemCount() -> Int {
-        let cardItems = fetchCardItems()
-        return cardItems.reduce(0) { $0 + Int($1.cardCount) }
+    func totalCartItemCount() -> Int {
+        let cartItems = fetchCartItems()
+        return cartItems.reduce(0) { $0 + Int($1.cartCount) }
     }
 }

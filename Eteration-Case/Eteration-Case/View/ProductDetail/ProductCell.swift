@@ -8,7 +8,7 @@
 import UIKit
 
 protocol ProductCellDelegate: AnyObject {
-    func didTapAddToCard(for product: ProductModel)
+    func didTapAddToCart(for product: ProductModel)
 }
 
 class ProductCell: UICollectionViewCell {
@@ -19,7 +19,7 @@ class ProductCell: UICollectionViewCell {
     private var imageLoadingState: String?
     weak var delegate: ProductCellDelegate?
     private var product: ProductModel?
-    var onAddToCard: (() -> Void)?
+    var onAddToCart: (() -> Void)?
     
     private let favoriteButton: FavoriteButton = {
         let button = FavoriteButton()
@@ -50,19 +50,19 @@ class ProductCell: UICollectionViewCell {
         return label
     }()
     
-    private lazy var addToCardButton: UIButton = {
+    private lazy var addToCartButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Add to Card", for: .normal)
+        button.setTitle("Add to Cart", for: .normal)
         button.backgroundColor = ThemeManager.primaryColor
         button.tintColor = ThemeManager.secondaryTextColor
         button.layer.cornerRadius = ThemeManager.CornerRadius.small.rawValue
         button.titleLabel?.font = FontProvider.Body1.regular
-        button.addTarget(self, action: #selector(addToCardTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(addToCartTapped), for: .touchUpInside)
         return button
     }()
     
     private lazy var stackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [productImageView, priceLabel, titleLabel, addToCardButton])
+        let stackView = UIStackView(arrangedSubviews: [productImageView, priceLabel, titleLabel, addToCartButton])
         stackView.axis = .vertical
         stackView.spacing = ThemeManager.Spacing.large.rawValue
         stackView.alignment = .fill
@@ -104,7 +104,7 @@ class ProductCell: UICollectionViewCell {
             stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -ThemeManager.Spacing.medium.rawValue),
             
             productImageView.heightAnchor.constraint(equalTo: productImageView.widthAnchor),
-            addToCardButton.heightAnchor.constraint(equalToConstant: 36),
+            addToCartButton.heightAnchor.constraint(equalToConstant: 36),
             
             favoriteButton.topAnchor.constraint(equalTo: productImageView.topAnchor, constant: ThemeManager.Spacing.small.rawValue),
             favoriteButton.trailingAnchor.constraint(equalTo: productImageView.trailingAnchor, constant: -ThemeManager.Spacing.small.rawValue),
@@ -155,11 +155,11 @@ extension ProductCell {
     }
 }
 
-// MARK: - Card
+// MARK: - Cart
 extension ProductCell {
-    @objc private func addToCardTapped() {
+    @objc private func addToCartTapped() {
         guard let product = product else { return }
-        delegate?.didTapAddToCard(for: product)
+        delegate?.didTapAddToCart(for: product)
     }
 }
 

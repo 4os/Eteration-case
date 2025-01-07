@@ -1,5 +1,5 @@
 //
-//  CardCell.swift
+//  CartCell.swift
 //  Eteration-Case
 //
 //  Created by 4os on 7.01.2025.
@@ -7,8 +7,8 @@
 
 import UIKit
 
-class CardCell: UITableViewCell {
-    static let identifier = "CardCell"
+class CartCell: UITableViewCell {
+    static let identifier = "CartCell"
     
     var onIncrease: ((_ productId: String) -> Void)?
     var onDecrease: ((_ productId: String) -> Void)?

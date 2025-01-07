@@ -1,5 +1,5 @@
 //
-//  CardViewController.swift
+//  CartViewController.swift
 //  Eteration-Case
 //
 //  Created by 4os on 7.01.2025.
@@ -7,8 +7,8 @@
 
 import UIKit
 
-class CardViewController: UIViewController {
-    private let viewModel = CardViewModel()
+class CartViewController: UIViewController {
+    private let viewModel = CartViewModel()
 
     private lazy var loadingContainer: UIView = {
         let container = UIView()
@@ -46,13 +46,13 @@ class CardViewController: UIViewController {
         imageView.translatesAutoresizingMaskIntoConstraints = false
 
         let label = UILabel()
-        label.text = "Your card is empty"
+        label.text = "Your cart is empty"
         label.font = FontProvider.Body1.medium
         label.textColor = ThemeManager.primaryTextColor
         label.textAlignment = .center
 
         let descriptionLabel = UILabel()
-        descriptionLabel.text = "Items you add to your card will appear here"
+        descriptionLabel.text = "Items you add to your cart will appear here"
         descriptionLabel.font = FontProvider.Body2.regular
         descriptionLabel.textColor = ThemeManager.secondaryTextColor
         descriptionLabel.textAlignment = .center
@@ -76,7 +76,7 @@ class CardViewController: UIViewController {
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.register(CardCell.self, forCellReuseIdentifier: CardCell.identifier)
+        tableView.register(CartCell.self, forCellReuseIdentifier: CartCell.identifier)
         tableView.dataSource = self
         tableView.delegate = self
         tableView.separatorStyle = .none
@@ -107,8 +107,8 @@ class CardViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         setupBindings()
-        viewModel.loadCardProducts()
-        title = "Card"
+        viewModel.loadCartProducts()
+        title = "Cart"
     }
 
     private func setupUI() {
@@ -195,17 +195,17 @@ class CardViewController: UIViewController {
 
 // MARK: - TableView DataSource & Delegate
 
-extension CardViewController: UITableViewDataSource, UITableViewDelegate {
+extension CartViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.products.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: CardCell.identifier, for: indexPath) as? CardCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CartCell.identifier, for: indexPath) as? CartCell else {
             return UITableViewCell()
         }
         let product = viewModel.products[indexPath.row]
-        let count = viewModel.cardCounts[product.id] ?? 0
+        let count = viewModel.cartCounts[product.id] ?? 0
         
         cell.configure(with: product, count: count)
         
@@ -222,8 +222,8 @@ extension CardViewController: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
-// MARK: - CardViewModelDelegate
-extension CardViewController: CardViewModelDelegate {
+// MARK: - CartViewModelDelegate
+extension CartViewController: CartViewModelDelegate {
     func didChangeLoadingState(isLoading: Bool) {
         DispatchQueue.main.async {
             self.loadingContainer.isHidden = !isLoading
@@ -236,8 +236,8 @@ extension CardViewController: CardViewModelDelegate {
     }
 }
 
-// MARK: - CardViewModel
-extension CardViewModel {
+// MARK: - CartViewModel
+extension CartViewModel {
     var hasNoProducts: Bool {
         return products.isEmpty
     }
