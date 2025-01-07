@@ -11,7 +11,7 @@ import UIKit
 
 protocol HomeDataSourceDelegate: AnyObject {
     func didSelectProduct(_ product: ProductModel)
-    func didTapAddToBasket(_ product: ProductModel)
+    func didTapAddToCard(_ product: ProductModel)
 }
 
 class HomeDataSource: NSObject, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
@@ -48,8 +48,8 @@ class HomeDataSource: NSObject, UICollectionViewDataSource, UICollectionViewDele
         cell.configure(product: product)
         cell.delegate = self
 
-        cell.onAddToBasket = { [weak self] in
-            self?.delegate?.didTapAddToBasket(product)
+        cell.onAddToCard = { [weak self] in
+            self?.delegate?.didTapAddToCard(product)
         }
 
         return cell
@@ -100,7 +100,7 @@ class HomeDataSource: NSObject, UICollectionViewDataSource, UICollectionViewDele
 // MARK: - ProductCellDelegate
 
 extension HomeDataSource: ProductCellDelegate {
-    func didTapAddToBasket(for product: ProductModel) {
-        delegate?.didTapAddToBasket(product)
+    func didTapAddToCard(for product: ProductModel) {
+        delegate?.didTapAddToCard(product)
     }
 }

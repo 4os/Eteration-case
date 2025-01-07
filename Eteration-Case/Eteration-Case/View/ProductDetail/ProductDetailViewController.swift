@@ -104,9 +104,9 @@ class ProductDetailViewController: UIViewController {
         return label
     }()
     
-    private lazy var addToBasketButton: UIButton = {
+    private lazy var addToCardButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Add to Basket", for: .normal)
+        button.setTitle("Add to Card", for: .normal)
         button.titleLabel?.font = FontProvider.Heading3.bold
         button.backgroundColor = ThemeManager.primaryColor
         button.setTitleColor(.white, for: .normal)
@@ -149,7 +149,7 @@ class ProductDetailViewController: UIViewController {
         contentView.addSubview(descriptionLabel)
         
         bottomBar.addArrangedSubview(priceContainer)
-        bottomBar.addArrangedSubview(addToBasketButton)
+        bottomBar.addArrangedSubview(addToCardButton)
         
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -188,14 +188,14 @@ class ProductDetailViewController: UIViewController {
             bottomBar.heightAnchor.constraint(equalToConstant: 60),
             
             priceContainer.leadingAnchor.constraint(equalTo: bottomBar.leadingAnchor, constant: 16),
-            priceContainer.trailingAnchor.constraint(equalTo: addToBasketButton.leadingAnchor, constant: 16),
-            addToBasketButton.centerYAnchor.constraint(equalTo: bottomBar.centerYAnchor),
+            priceContainer.trailingAnchor.constraint(equalTo: addToCardButton.leadingAnchor, constant: 16),
+            addToCardButton.centerYAnchor.constraint(equalTo: bottomBar.centerYAnchor),
             priceContainer.widthAnchor.constraint(equalToConstant: 200),
             priceContainer.heightAnchor.constraint(equalToConstant: 100),
             
-            addToBasketButton.trailingAnchor.constraint(equalTo: bottomBar.trailingAnchor, constant: -16),
-            addToBasketButton.centerYAnchor.constraint(equalTo: bottomBar.centerYAnchor),
-            addToBasketButton.widthAnchor.constraint(equalToConstant: 120),
+            addToCardButton.trailingAnchor.constraint(equalTo: bottomBar.trailingAnchor, constant: -16),
+            addToCardButton.centerYAnchor.constraint(equalTo: bottomBar.centerYAnchor),
+            addToCardButton.widthAnchor.constraint(equalToConstant: 120),
             
             loadingIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             loadingIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
@@ -268,7 +268,7 @@ class ProductDetailViewController: UIViewController {
     private func setupActions() {
         backButton.addTarget(self, action: #selector(handleBack), for: .touchUpInside)
         favoriteButton.delegate = self
-        addToBasketButton.addTarget(self, action: #selector(handleAddToBasket), for: .touchUpInside)
+        addToCardButton.addTarget(self, action: #selector(handleAddToCard), for: .touchUpInside)
     }
     
     func checkIsInFavorites() {
@@ -282,14 +282,14 @@ class ProductDetailViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     
-    @objc private func handleAddToBasket() {
+    @objc private func handleAddToCard() {
         guard let product = product else { return }
         
-        if BasketManager.shared.isProductInBasket(productId: product.id) {
-            showAlert(title: "Already Added", message: "This product is already in your Basket.")
+        if CardManager.shared.isProductInCard(productId: product.id) {
+            showAlert(title: "Already Added", message: "This product is already in your Card.")
         } else {
-            BasketManager.shared.addToBasket(productId: product.id, basketCount: 1)
-            showAlert(title: "Success", message: "Product added to your basket.")
+            CardManager.shared.addToCard(productId: product.id, cardCount: 1)
+            showAlert(title: "Success", message: "Product added to your card.")
         }
     }
     

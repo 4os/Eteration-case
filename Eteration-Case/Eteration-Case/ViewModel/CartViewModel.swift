@@ -1,5 +1,5 @@
 //
-//  BasketViewModel.swift
+//  CardViewModel.swift
 //  Eteration-Case
 //
 //  Created by 4os on 7.01.2025.
@@ -7,20 +7,20 @@
 
 import Foundation
 
-protocol BasketViewModelDelegate: AnyObject {
+protocol CardViewModelDelegate: AnyObject {
     func didChangeLoadingState(isLoading: Bool)
 }
 
-class BasketViewModel {
-    private let basketManager = BasketManager.shared
+class CardViewModel {
+    private let cardManager = CardManager.shared
     private(set) var products: [ProductModel] = []
-    private(set) var basketCounts: [String: Int] = [:]
+    private(set) var cardCounts: [String: Int] = [:]
     var onProductsUpdated: (() -> Void)?
     var totalPrice: Double = 0
-    weak var delegate: BasketViewModelDelegate?
+    weak var delegate: CardViewModelDelegate?
 
     init() {
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadBasket), name: .basketUpdated, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadCard), name: .cardUpdated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(updateCounts), name: .countChanged, object: nil)
     }
 
@@ -32,16 +32,16 @@ class BasketViewModel {
         delegate?.didChangeLoadingState(isLoading: isLoading)
     }
 
-    @objc private func reloadBasket() {
-        loadBasketProducts()
+    @objc private func reloadCard() {
+        loadCardProducts()
     }
 
-    func loadBasketProducts() {
+    func loadCardProducts() {
         setLoadingState(true)
-        let basketItems = basketManager.fetchBasketItems()
-        basketCounts = Dictionary(uniqueKeysWithValues: basketItems.compactMap { ($0.id ?? "", Int($0.basketCount)) })
+        let cardItems = cardManager.fetchCardItems()
+        cardCounts = Dictionary(uniqueKeysWithValues: cardItems.compactMap { ($0.id ?? "", Int($0.cardCount)) })
 
-        let ids = basketItems.compactMap { $0.id }.sorted()
+        let ids = cardItems.compactMap { $0.id }.sorted()
         let dispatchGroup = DispatchGroup()
         var fetchedProducts: [ProductModel] = []
 
@@ -69,28 +69,28 @@ class BasketViewModel {
 
     func increaseProductCount(for id: String) {
         DispatchQueue.main.async {
-            self.basketManager.increaseBasketCount(for: id)
+            self.cardManager.increaseCardCount(for: id)
             self.updateCounts()
         }
     }
 
     func decreaseProductCount(for id: String) {
         DispatchQueue.main.async {
-            self.basketManager.decreaseBasketCount(for: id)
+            self.cardManager.decreaseCardCount(for: id)
             self.updateCounts()
         }
     }
 
     @objc private func updateCounts() {
-        let basketItems = basketManager.fetchBasketItems()
-        basketCounts = Dictionary(uniqueKeysWithValues: basketItems.compactMap { ($0.id ?? "", Int($0.basketCount)) })
+        let cardItems = cardManager.fetchCardItems()
+        cardCounts = Dictionary(uniqueKeysWithValues: cardItems.compactMap { ($0.id ?? "", Int($0.cardCount)) })
         self.calculateTotalPrice()
         onProductsUpdated?()
     }
 
     private func calculateTotalPrice() {
         totalPrice = products.reduce(0) { result, product in
-            guard let count = basketCounts[product.id], let price = Double(product.price) else { return result }
+            guard let count = cardCounts[product.id], let price = Double(product.price) else { return result }
             return result + (Double(count) * price)
         }
     }

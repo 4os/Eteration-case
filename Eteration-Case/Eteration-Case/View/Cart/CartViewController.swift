@@ -1,5 +1,5 @@
 //
-//  BasketViewController.swift
+//  CardViewController.swift
 //  Eteration-Case
 //
 //  Created by 4os on 7.01.2025.
@@ -7,8 +7,8 @@
 
 import UIKit
 
-class BasketViewController: UIViewController {
-    private let viewModel = BasketViewModel()
+class CardViewController: UIViewController {
+    private let viewModel = CardViewModel()
 
     private lazy var loadingContainer: UIView = {
         let container = UIView()
@@ -46,13 +46,13 @@ class BasketViewController: UIViewController {
         imageView.translatesAutoresizingMaskIntoConstraints = false
 
         let label = UILabel()
-        label.text = "Your basket is empty"
+        label.text = "Your card is empty"
         label.font = FontProvider.Body1.medium
         label.textColor = ThemeManager.primaryTextColor
         label.textAlignment = .center
 
         let descriptionLabel = UILabel()
-        descriptionLabel.text = "Items you add to your basket will appear here"
+        descriptionLabel.text = "Items you add to your card will appear here"
         descriptionLabel.font = FontProvider.Body2.regular
         descriptionLabel.textColor = ThemeManager.secondaryTextColor
         descriptionLabel.textAlignment = .center
@@ -76,7 +76,7 @@ class BasketViewController: UIViewController {
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.register(BasketCell.self, forCellReuseIdentifier: BasketCell.identifier)
+        tableView.register(CardCell.self, forCellReuseIdentifier: CardCell.identifier)
         tableView.dataSource = self
         tableView.delegate = self
         tableView.separatorStyle = .none
@@ -107,8 +107,8 @@ class BasketViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         setupBindings()
-        viewModel.loadBasketProducts()
-        title = "Basket"
+        viewModel.loadCardProducts()
+        title = "Card"
     }
 
     private func setupUI() {
@@ -195,17 +195,17 @@ class BasketViewController: UIViewController {
 
 // MARK: - TableView DataSource & Delegate
 
-extension BasketViewController: UITableViewDataSource, UITableViewDelegate {
+extension CardViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.products.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: BasketCell.identifier, for: indexPath) as? BasketCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CardCell.identifier, for: indexPath) as? CardCell else {
             return UITableViewCell()
         }
         let product = viewModel.products[indexPath.row]
-        let count = viewModel.basketCounts[product.id] ?? 0
+        let count = viewModel.cardCounts[product.id] ?? 0
         
         cell.configure(with: product, count: count)
         
@@ -222,8 +222,8 @@ extension BasketViewController: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
-// MARK: - BasketViewModelDelegate
-extension BasketViewController: BasketViewModelDelegate {
+// MARK: - CardViewModelDelegate
+extension CardViewController: CardViewModelDelegate {
     func didChangeLoadingState(isLoading: Bool) {
         DispatchQueue.main.async {
             self.loadingContainer.isHidden = !isLoading
@@ -236,8 +236,8 @@ extension BasketViewController: BasketViewModelDelegate {
     }
 }
 
-// MARK: - BasketViewModel
-extension BasketViewModel {
+// MARK: - CardViewModel
+extension CardViewModel {
     var hasNoProducts: Bool {
         return products.isEmpty
     }
