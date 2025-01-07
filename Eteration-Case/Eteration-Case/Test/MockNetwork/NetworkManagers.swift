@@ -7,25 +7,26 @@
 
 import Foundation
 
-class MockNetworkManager {
+final class MockNetworkManager {
     static let shared = MockNetworkManager()
     private init() {}
 
     func request<T: Decodable>(
-        requestable: URLRequestable,
-        responseType: T.Type,
-        completion: @escaping (Result<T, Error>) -> Void
+        with requestable: URLRequestable,
+        decodeTo type: T.Type,
+        completionHandler: @escaping (Result<T, Error>) -> Void
     ) {
-        guard let mockData = MockDataProvider.shared.getMockData(for: requestable) else {
-            completion(.failure(NSError(domain: "Mock Data Error", code: 404, userInfo: nil)))
+        guard let mockPayload = MockDataProvider.shared.getMockData(for: requestable) else {
+            let error = NSError(domain: "MockDataUnavailable", code: 404, userInfo: [NSLocalizedDescriptionKey: "No mock data found for the request."])
+            completionHandler(.failure(error))
             return
         }
 
         do {
-            let decodedResponse = try JSONDecoder().decode(T.self, from: mockData)
-            completion(.success(decodedResponse))
-        } catch {
-            completion(.failure(error))
+            let parsedResponse = try JSONDecoder().decode(type, from: mockPayload)
+            completionHandler(.success(parsedResponse))
+        } catch let decodingError {
+            completionHandler(.failure(decodingError))
         }
     }
 }

@@ -141,14 +141,13 @@ class HomeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
-        title = "E-Market"
+        setupNavigationBar()
         setupLayout()
         setupBindings()
         dataSource.delegate = self
 
         dataSource.onScrollReachedEnd = { [weak self] in
-            guard let self else { return }
+            guard let self = self else { return }
             self.viewModel.handleScrollReachedEnd(searchQuery: self.searchBar.text)
         }
 
@@ -187,6 +186,15 @@ class HomeViewController: UIViewController {
         viewModel.delegate = self
         dataSource.viewModel = viewModel
     }
+    
+    private func setupNavigationBar() {
+        let titleLabel = UILabel()
+        titleLabel.text = "E-Market"
+        titleLabel.font = UIFont.boldSystemFont(ofSize: 22)
+        titleLabel.textColor = .white
+        titleLabel.textAlignment = .center
+        navigationItem.titleView = titleLabel
+    }
 
     // MARK: - Actions
 
@@ -217,6 +225,7 @@ extension HomeViewController: HomeViewModelDelegate {
     func didUpdateProducts() {
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
+            print("Filtered Products Displayed on UI: \(self.viewModel.filteredProducts)")
             self.collectionView.reloadData()
         }
     }
@@ -267,6 +276,16 @@ extension HomeViewController: FilterDelegate {
         viewModel.isFilterActive = true
         viewModel.isSearchActive = false
         viewModel.fetchFilteredProducts(sortBy: sortBy, brands: brands, models: models, reset: true)
+
+        if viewModel.filteredProducts.isEmpty {
+            let alert = UIAlertController(
+                title: "No Results",
+                message: "No results found for the selected filters.",
+                preferredStyle: .alert
+            )
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            present(alert, animated: true)
+        }
     }
 }
 
@@ -292,3 +311,5 @@ extension HomeViewController: HomeDataSourceDelegate {
         present(alert, animated: true)
     }
 }
+
+

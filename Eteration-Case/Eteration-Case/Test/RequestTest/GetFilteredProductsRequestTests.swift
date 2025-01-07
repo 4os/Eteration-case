@@ -10,7 +10,6 @@ import XCTest
 
 final class GetFilteredProductsRequestTests: XCTestCase {
     func testGetFilteredProductsRequest() {
-        // Arrange
         let request = GetFilteredProductsRequest(
             page: 1,
             limit: 10,
@@ -21,10 +20,8 @@ final class GetFilteredProductsRequestTests: XCTestCase {
         )
         let mockNetworkManager = MockNetworkManager.shared
 
-        // Act
         let expectation = XCTestExpectation(description: "Request should return mocked filtered products")
-        mockNetworkManager.request(requestable: request, responseType: [ProductModel].self) { result in
-            // Assert
+        mockNetworkManager.request(with: request, decodeTo: [ProductModel].self) { result in
             switch result {
             case .success(let products):
                 XCTAssertEqual(products.count, 1)

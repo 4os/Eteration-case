@@ -8,20 +8,21 @@
 import XCTest
 @testable import Eteration_Case
 
-final class GetProductsRequestTests: XCTestCase {
-    func testGetProductsRequest() {
-        let request = GetProductsRequest(page: 1, limit: 10)
-        let mockNetworkManager = MockNetworkManager.shared
+final class ProductRequestsTests: XCTestCase {
+    
+    func testFetchingProducts() {
+        let productRequest = GetProductsRequest(page: 1, limit: 10)
+        let networkMock = MockNetworkManager.shared
         
-        let expectation = XCTestExpectation(description: "Request should return mocked products")
-        mockNetworkManager.request(requestable: request, responseType: [ProductModel].self) { result in
-            switch result {
-            case .success(let products):
-                XCTAssertEqual(products.count, 2)
-                XCTAssertEqual(products[0].id, "1")
-                XCTAssertEqual(products[0].name, "Product 1")
+        let expectation = XCTestExpectation(description: "Expected to fetch mocked product list")
+        networkMock.request(with: productRequest, decodeTo: [ProductModel].self) { response in
+            switch response {
+            case .success(let productList):
+                XCTAssertEqual(productList.count, 2)
+                XCTAssertEqual(productList.first?.id, "1")
+                XCTAssertEqual(productList.first?.name, "Product 1")
             case .failure(let error):
-                XCTFail("Request failed with error: \(error)")
+                XCTFail("Request failed unexpectedly: \(error)")
             }
             expectation.fulfill()
         }
@@ -29,19 +30,19 @@ final class GetProductsRequestTests: XCTestCase {
         wait(for: [expectation], timeout: 2.0)
     }
     
-    func testGetProductByIdRequest() {
-        let request = GetProductByIdRequest(page: 1, limit: 1, id: "1")
-        let mockNetworkManager = MockNetworkManager.shared
+    func testFetchingProductDetailsById() {
+        let productDetailRequest = GetProductByIdRequest(page: 1, limit: 1, id: "1")
+        let networkMock = MockNetworkManager.shared
 
-        let expectation = XCTestExpectation(description: "Request should return mocked product by ID")
-        mockNetworkManager.request(requestable: request, responseType: ProductModel.self) { result in
-            switch result {
-            case .success(let product):
-                XCTAssertEqual(product.id, "1")
-                XCTAssertEqual(product.name, "Product 1")
-                XCTAssertEqual(product.price, "100")
+        let expectation = XCTestExpectation(description: "Expected to fetch mocked product details by ID")
+        networkMock.request(with: productDetailRequest, decodeTo: ProductModel.self) { response in
+            switch response {
+            case .success(let productDetail):
+                XCTAssertEqual(productDetail.id, "1")
+                XCTAssertEqual(productDetail.name, "Product 1")
+                XCTAssertEqual(productDetail.price, "100")
             case .failure(let error):
-                XCTFail("Request failed with error: \(error)")
+                XCTFail("Request failed unexpectedly: \(error)")
             }
             expectation.fulfill()
         }

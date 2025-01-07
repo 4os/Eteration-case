@@ -126,7 +126,6 @@ class ProductCell: UICollectionViewCell {
         self.product = product
         titleLabel.text = product.name
         priceLabel.text = "\(product.price) ₺"
-        
         productImageView.image = UIImage(named: "placeholder")
         currentImageLoadOperation?.cancel()
         configureImage(product)

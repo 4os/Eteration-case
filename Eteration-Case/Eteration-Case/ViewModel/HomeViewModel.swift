@@ -142,6 +142,15 @@ class HomeViewModel {
         isFiltering = true
         setLoadingState(true)
 
+        // Log request parameters
+        print("Request Parameters:")
+        print("Page: \(filterPage)")
+        print("Limit: \(limit)")
+        print("Brands: \(brands)")
+        print("Models: \(models)")
+        print("Sort Field: \(sortBy?.getSortType().rawValue ?? "None")")
+        print("Sort Option: \(sortBy?.getPath() ?? "None")")
+
         let request = GetFilteredProductsRequest(
             page: filterPage,
             limit: limit,

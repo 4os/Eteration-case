@@ -11,10 +11,11 @@ struct GetFilteredProductsRequest: URLRequestable {
     var headers: [String: String]? { nil }
     private let page: Int
     private let limit: Int
-    private let brand: String
-    private let model: String
+    private let brand: String?
+    private let model: String?
     private let sortOption: String?
     private let sortField: String?
+    
 
     var parameters: [String: Any?]? {
         return [
@@ -37,8 +38,8 @@ struct GetFilteredProductsRequest: URLRequestable {
     ) {
         self.page = page
         self.limit = limit
-        self.brand = brands.joined(separator: "|")
-        self.model = models.joined(separator: "|")
+        self.brand = brands.isEmpty ? nil : brands.joined(separator: "|")
+        self.model = models.isEmpty ? nil : models.joined(separator: "|")
         self.sortField = sortField
         self.sortOption = sortOption
     }
