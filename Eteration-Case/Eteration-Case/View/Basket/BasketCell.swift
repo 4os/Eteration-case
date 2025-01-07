@@ -17,14 +17,14 @@ class BasketCell: UITableViewCell {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = FontManager.Body1.regular
+        label.font = FontProvider.Body1.regular
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     private let priceLabel: UILabel = {
         let label = UILabel()
-        label.font = FontManager.Body1.regular
+        label.font = FontProvider.Body1.regular
         label.textColor = ThemeManager.primaryColor
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -48,7 +48,7 @@ class BasketCell: UITableViewCell {
         button.setTitle("-", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = .clear
-        button.titleLabel?.font = FontManager.Heading2.medium
+        button.titleLabel?.font = FontProvider.Heading2.medium
         button.backgroundColor = ThemeManager.secondaryContainterColor
         button.addTarget(self, action: #selector(decreaseTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -60,7 +60,7 @@ class BasketCell: UITableViewCell {
         button.setTitle("+", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = ThemeManager.secondaryContainterColor
-        button.titleLabel?.font = FontManager.Heading2.medium
+        button.titleLabel?.font = FontProvider.Heading2.medium
         button.addTarget(self, action: #selector(increaseTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -78,7 +78,7 @@ class BasketCell: UITableViewCell {
         let label = UILabel()
         label.textAlignment = .center
         label.textColor = .white
-        label.font = FontManager.Body1.regular
+        label.font = FontProvider.Body1.regular
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()

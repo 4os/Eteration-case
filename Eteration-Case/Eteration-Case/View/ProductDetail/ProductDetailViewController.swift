@@ -57,7 +57,7 @@ class ProductDetailViewController: UIViewController {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = FontManager.Heading2.bold
+        label.font = FontProvider.Heading2.bold
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -65,7 +65,7 @@ class ProductDetailViewController: UIViewController {
     
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
-        label.font = FontManager.Body2.regular
+        label.font = FontProvider.Body2.regular
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -90,7 +90,7 @@ class ProductDetailViewController: UIViewController {
     
     private lazy var priceTitle: UILabel = {
         let label = UILabel()
-        label.font = FontManager.Heading3.medium
+        label.font = FontProvider.Heading3.medium
         label.textColor = ThemeManager.primaryColor
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Price:"
@@ -99,15 +99,15 @@ class ProductDetailViewController: UIViewController {
     
     private lazy var priceLabel: UILabel = {
         let label = UILabel()
-        label.font = FontManager.Heading3.bold
+        label.font = FontProvider.Heading3.bold
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    private lazy var addToCartButton: UIButton = {
+    private lazy var addToBasketButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Add to Cart", for: .normal)
-        button.titleLabel?.font = FontManager.Heading3.bold
+        button.setTitle("Add to Basket", for: .normal)
+        button.titleLabel?.font = FontProvider.Heading3.bold
         button.backgroundColor = ThemeManager.primaryColor
         button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = 8
@@ -149,7 +149,7 @@ class ProductDetailViewController: UIViewController {
         contentView.addSubview(descriptionLabel)
         
         bottomBar.addArrangedSubview(priceContainer)
-        bottomBar.addArrangedSubview(addToCartButton)
+        bottomBar.addArrangedSubview(addToBasketButton)
         
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -188,14 +188,14 @@ class ProductDetailViewController: UIViewController {
             bottomBar.heightAnchor.constraint(equalToConstant: 60),
             
             priceContainer.leadingAnchor.constraint(equalTo: bottomBar.leadingAnchor, constant: 16),
-            priceContainer.trailingAnchor.constraint(equalTo: addToCartButton.leadingAnchor, constant: 16),
-            addToCartButton.centerYAnchor.constraint(equalTo: bottomBar.centerYAnchor),
+            priceContainer.trailingAnchor.constraint(equalTo: addToBasketButton.leadingAnchor, constant: 16),
+            addToBasketButton.centerYAnchor.constraint(equalTo: bottomBar.centerYAnchor),
             priceContainer.widthAnchor.constraint(equalToConstant: 200),
             priceContainer.heightAnchor.constraint(equalToConstant: 100),
             
-            addToCartButton.trailingAnchor.constraint(equalTo: bottomBar.trailingAnchor, constant: -16),
-            addToCartButton.centerYAnchor.constraint(equalTo: bottomBar.centerYAnchor),
-            addToCartButton.widthAnchor.constraint(equalToConstant: 120),
+            addToBasketButton.trailingAnchor.constraint(equalTo: bottomBar.trailingAnchor, constant: -16),
+            addToBasketButton.centerYAnchor.constraint(equalTo: bottomBar.centerYAnchor),
+            addToBasketButton.widthAnchor.constraint(equalToConstant: 120),
             
             loadingIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             loadingIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
@@ -268,7 +268,7 @@ class ProductDetailViewController: UIViewController {
     private func setupActions() {
         backButton.addTarget(self, action: #selector(handleBack), for: .touchUpInside)
         favoriteButton.delegate = self
-        addToCartButton.addTarget(self, action: #selector(handleAddToCart), for: .touchUpInside)
+        addToBasketButton.addTarget(self, action: #selector(handleAddToBasket), for: .touchUpInside)
     }
     
     func checkIsInFavorites() {
@@ -282,11 +282,11 @@ class ProductDetailViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     
-    @objc private func handleAddToCart() {
+    @objc private func handleAddToBasket() {
         guard let product = product else { return }
         
         if BasketManager.shared.isProductInBasket(productId: product.id) {
-            showAlert(title: "Already Added", message: "This product is already in your basket.")
+            showAlert(title: "Already Added", message: "This product is already in your Basket.")
         } else {
             BasketManager.shared.addToBasket(productId: product.id, basketCount: 1)
             showAlert(title: "Success", message: "Product added to your basket.")

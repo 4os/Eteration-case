@@ -46,7 +46,7 @@ class FavoriteCell: UITableViewCell {
 
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = FontManager.Body1.medium
+        label.font = FontProvider.Body1.medium
         label.textColor = ThemeManager.primaryTextColor
         label.numberOfLines = 2
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -55,7 +55,7 @@ class FavoriteCell: UITableViewCell {
 
     private let priceLabel: UILabel = {
         let label = UILabel()
-        label.font = FontManager.Body1.bold
+        label.font = FontProvider.Body1.bold
         label.textColor = ThemeManager.primaryColor
         label.translatesAutoresizingMaskIntoConstraints = false
         return label

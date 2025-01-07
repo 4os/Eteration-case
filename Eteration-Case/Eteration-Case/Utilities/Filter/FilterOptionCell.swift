@@ -13,7 +13,7 @@ class FilterOptionCell: UICollectionViewCell {
 
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = FontManager.Body1.regular
+        label.font = FontProvider.Body1.regular
         label.textColor = .label
         label.translatesAutoresizingMaskIntoConstraints = false
         return label

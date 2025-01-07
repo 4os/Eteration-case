@@ -47,13 +47,13 @@ class BasketViewController: UIViewController {
 
         let label = UILabel()
         label.text = "Your basket is empty"
-        label.font = FontManager.Body1.medium
+        label.font = FontProvider.Body1.medium
         label.textColor = ThemeManager.primaryTextColor
         label.textAlignment = .center
 
         let descriptionLabel = UILabel()
         descriptionLabel.text = "Items you add to your basket will appear here"
-        descriptionLabel.font = FontManager.Body2.regular
+        descriptionLabel.font = FontProvider.Body2.regular
         descriptionLabel.textColor = ThemeManager.secondaryTextColor
         descriptionLabel.textAlignment = .center
 
@@ -85,7 +85,7 @@ class BasketViewController: UIViewController {
 
     private lazy var totalLabel: UILabel = {
         let label = UILabel()
-        label.font = FontManager.Body1.regular
+        label.font = FontProvider.Body1.regular
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
         return label
@@ -97,7 +97,7 @@ class BasketViewController: UIViewController {
         button.backgroundColor = ThemeManager.primaryColor
         button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = ThemeManager.CornerRadius.small.rawValue
-        button.titleLabel?.font = FontManager.Body1.bold
+        button.titleLabel?.font = FontProvider.Body1.bold
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(completePurchase), for: .touchUpInside)
         return button
@@ -170,11 +170,11 @@ class BasketViewController: UIViewController {
         let priceText = String(format: "%.2f ₺", viewModel.totalPrice)
 
         let totalAttributes: [NSAttributedString.Key: Any] = [
-            .font: FontManager.Body1.regular,
+            .font: FontProvider.Body1.regular,
             .foregroundColor: ThemeManager.primaryColor
         ]
         let priceAttributes: [NSAttributedString.Key: Any] = [
-            .font: FontManager.Body1.regular
+            .font: FontProvider.Body1.regular
         ]
         let attributedString = NSMutableAttributedString(string: totalText, attributes: totalAttributes)
         let priceAttributedString = NSAttributedString(string: priceText, attributes: priceAttributes)

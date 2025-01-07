@@ -44,20 +44,20 @@ class FavoritesViewController: UIViewController {
 
         let label = UILabel()
         label.text = "No favorites yet"
-        label.font = FontManager.Body1.medium
+        label.font = FontProvider.Body1.medium
         label.textColor = ThemeManager.primaryTextColor
         label.textAlignment = .center
 
         let descriptionLabel = UILabel()
         descriptionLabel.text = "Items you favorite will appear here"
-        descriptionLabel.font = FontManager.Body2.regular
+        descriptionLabel.font = FontProvider.Body2.regular
         descriptionLabel.textColor = ThemeManager.secondaryTextColor
         descriptionLabel.textAlignment = .center
 
         let exploreButton = UIButton(type: .system)
         exploreButton.setTitle("Explore Products", for: .normal)
         exploreButton.setTitleColor(ThemeManager.primaryColor, for: .normal)
-        exploreButton.titleLabel?.font = FontManager.Body1.bold
+        exploreButton.titleLabel?.font = FontProvider.Body1.bold
         exploreButton.addTarget(self, action: #selector(exploreButtonTapped), for: .touchUpInside)
 
         stackView.addArrangedSubview(imageView)

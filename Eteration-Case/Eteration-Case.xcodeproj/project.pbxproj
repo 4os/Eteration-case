@@ -30,30 +30,26 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		972BDDCF2D2C0B8900753AB9 /* Exceptions for "Eteration-Case" folder in "Eteration-Case" target */ = {
+		97BB48232D2CA62300FD34CE /* Exceptions for "Eteration-Case" folder in "Eteration-CaseTests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Info.plist,
-				Tests/Eteration_CaseTests.swift,
-				Tests/UITests/Eteration_CaseUITests.swift,
-				Tests/UITests/Eteration_CaseUITestsLaunchTests.swift,
-			);
-			target = 972BDDA32D2C0B8700753AB9 /* Eteration-Case */;
-		};
-		972BDEE32D2C226B00753AB9 /* Exceptions for "Eteration-Case" folder in "Eteration-CaseTests" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Tests/Eteration_CaseTests.swift,
+				Test/ModelTest/ProductModelTests.swift,
+				Test/RequestTest/GetFilteredProductsRequestTests.swift,
+				Test/RequestTest/GetProductsRequestTests.swift,
+				Test/RequestTest/SearchProductsRequests.swift,
 			);
 			target = 972BDDBC2D2C0B8900753AB9 /* Eteration-CaseTests */;
 		};
-		972BDEE92D2C226F00753AB9 /* Exceptions for "Eteration-Case" folder in "Eteration-CaseUITests" target */ = {
+		97ECF8572D2CA4240045BAD9 /* Exceptions for "Eteration-Case" folder in "Eteration-Case" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Tests/UITests/Eteration_CaseUITests.swift,
-				Tests/UITests/Eteration_CaseUITestsLaunchTests.swift,
+				Info.plist,
+				Test/ModelTest/ProductModelTests.swift,
+				Test/RequestTest/GetFilteredProductsRequestTests.swift,
+				Test/RequestTest/GetProductsRequestTests.swift,
+				Test/RequestTest/SearchProductsRequests.swift,
 			);
-			target = 972BDDC62D2C0B8900753AB9 /* Eteration-CaseUITests */;
+			target = 972BDDA32D2C0B8700753AB9 /* Eteration-Case */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -61,9 +57,8 @@
 		972BDDA62D2C0B8700753AB9 /* Eteration-Case */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				972BDDCF2D2C0B8900753AB9 /* Exceptions for "Eteration-Case" folder in "Eteration-Case" target */,
-				972BDEE32D2C226B00753AB9 /* Exceptions for "Eteration-Case" folder in "Eteration-CaseTests" target */,
-				972BDEE92D2C226F00753AB9 /* Exceptions for "Eteration-Case" folder in "Eteration-CaseUITests" target */,
+				97ECF8572D2CA4240045BAD9 /* Exceptions for "Eteration-Case" folder in "Eteration-Case" target */,
+				97BB48232D2CA62300FD34CE /* Exceptions for "Eteration-Case" folder in "Eteration-CaseTests" target */,
 			);
 			path = "Eteration-Case";
 			sourceTree = "<group>";
@@ -193,10 +188,12 @@
 					};
 					972BDDBC2D2C0B8900753AB9 = {
 						CreatedOnToolsVersion = 16.1;
+						LastSwiftMigration = 1610;
 						TestTargetID = 972BDDA32D2C0B8700753AB9;
 					};
 					972BDDC62D2C0B8900753AB9 = {
 						CreatedOnToolsVersion = 16.1;
+						LastSwiftMigration = 1610;
 						TestTargetID = 972BDDA32D2C0B8700753AB9;
 					};
 				};
@@ -293,6 +290,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = GA48AS43F9;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_EXPAND_BUILD_SETTINGS = YES;
 				INFOPLIST_FILE = "Eteration-Case/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -320,6 +318,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = GA48AS43F9;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_EXPAND_BUILD_SETTINGS = YES;
 				INFOPLIST_FILE = "Eteration-Case/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -461,6 +460,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = GA48AS43F9;
@@ -470,7 +470,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ahmetonursahin.Eteration-CaseTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
+				SYSTEM_FRAMEWORK_SEARCH_PATHS = "$(SDKROOT)/Developer/Library/Frameworks";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Eteration-Case.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Eteration-Case";
 			};
@@ -480,6 +482,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = GA48AS43F9;
@@ -490,6 +493,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
+				SYSTEM_FRAMEWORK_SEARCH_PATHS = "$(SDKROOT)/Developer/Library/Frameworks";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Eteration-Case.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Eteration-Case";
 			};
@@ -498,6 +502,7 @@
 		972BDDD92D2C0B8900753AB9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = GA48AS43F9;
@@ -506,7 +511,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ahmetonursahin.Eteration-CaseUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
+				SYSTEM_FRAMEWORK_SEARCH_PATHS = "$(SDKROOT)/Developer/Library/Frameworks";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = "Eteration-Case";
 			};
@@ -515,6 +522,7 @@
 		972BDDDA2D2C0B8900753AB9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = GA48AS43F9;
@@ -524,6 +532,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
+				SYSTEM_FRAMEWORK_SEARCH_PATHS = "$(SDKROOT)/Developer/Library/Frameworks";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = "Eteration-Case";
 			};

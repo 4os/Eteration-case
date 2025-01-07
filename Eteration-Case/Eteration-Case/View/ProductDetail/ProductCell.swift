@@ -36,7 +36,7 @@ class ProductCell: UICollectionViewCell {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = FontManager.Body2.semibold
+        label.font = FontProvider.Body2.semibold
         label.textAlignment = .left
         label.numberOfLines = 1
         return label
@@ -44,25 +44,25 @@ class ProductCell: UICollectionViewCell {
     
     private let priceLabel: UILabel = {
         let label = UILabel()
-        label.font = FontManager.Body2.semibold
+        label.font = FontProvider.Body2.semibold
         label.textColor = ThemeManager.primaryColor
         label.textAlignment = .left
         return label
     }()
     
-    private lazy var addToCartButton: UIButton = {
+    private lazy var addToBasketButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Add to Cart", for: .normal)
+        button.setTitle("Add to Basket", for: .normal)
         button.backgroundColor = ThemeManager.primaryColor
         button.tintColor = ThemeManager.secondaryTextColor
         button.layer.cornerRadius = ThemeManager.CornerRadius.small.rawValue
-        button.titleLabel?.font = FontManager.Body1.regular
+        button.titleLabel?.font = FontProvider.Body1.regular
         button.addTarget(self, action: #selector(addToBasketTapped), for: .touchUpInside)
         return button
     }()
     
     private lazy var stackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [productImageView, priceLabel, titleLabel, addToCartButton])
+        let stackView = UIStackView(arrangedSubviews: [productImageView, priceLabel, titleLabel, addToBasketButton])
         stackView.axis = .vertical
         stackView.spacing = ThemeManager.Spacing.large.rawValue
         stackView.alignment = .fill
@@ -104,7 +104,7 @@ class ProductCell: UICollectionViewCell {
             stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -ThemeManager.Spacing.medium.rawValue),
             
             productImageView.heightAnchor.constraint(equalTo: productImageView.widthAnchor),
-            addToCartButton.heightAnchor.constraint(equalToConstant: 36),
+            addToBasketButton.heightAnchor.constraint(equalToConstant: 36),
             
             favoriteButton.topAnchor.constraint(equalTo: productImageView.topAnchor, constant: ThemeManager.Spacing.small.rawValue),
             favoriteButton.trailingAnchor.constraint(equalTo: productImageView.trailingAnchor, constant: -ThemeManager.Spacing.small.rawValue),

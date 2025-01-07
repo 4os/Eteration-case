@@ -65,7 +65,7 @@ class HomeViewController: UIViewController {
         selectFilterButton.setContentHuggingPriority(.required, for: .horizontal)
         selectFilterButton.translatesAutoresizingMaskIntoConstraints = false
         selectFilterButton.backgroundColor = ThemeManager.secondaryColor
-        selectFilterButton.titleLabel?.font =  FontManager.Body2.regular
+        selectFilterButton.titleLabel?.font =  FontProvider.Body2.regular
         selectFilterButton.setTitleColor(ThemeManager.primaryTextColor, for: .normal)
         return selectFilterButton
     }()
@@ -77,7 +77,7 @@ class HomeViewController: UIViewController {
         clearFiltersButton.setContentHuggingPriority(.required, for: .horizontal)
         clearFiltersButton.translatesAutoresizingMaskIntoConstraints = false
         clearFiltersButton.backgroundColor = ThemeManager.secondaryColor
-        clearFiltersButton.titleLabel?.font =  FontManager.Body2.regular
+        clearFiltersButton.titleLabel?.font =  FontProvider.Body2.regular
         clearFiltersButton.setTitleColor(ThemeManager.primaryTextColor, for: .normal)
         return clearFiltersButton
     }()
@@ -88,7 +88,7 @@ class HomeViewController: UIViewController {
         filtersLabel.numberOfLines = 3
         filtersLabel.lineBreakMode = .byWordWrapping
         filtersLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
-        filtersLabel.font = FontManager.Heading3.regular
+        filtersLabel.font = FontProvider.Heading3.regular
         return filtersLabel
     }()
 
@@ -323,7 +323,7 @@ extension HomeViewController: HomeDataSourceDelegate {
 
     func didTapAddToBasket(_ product: ProductModel) {
         if BasketManager.shared.isProductInBasket(productId: product.id) {
-            showAlert(title: "Already Added", message: "This product is already in your basket.")
+            showAlert(title: "Already Added", message: "This product is already in your Basket.")
         } else {
             BasketManager.shared.addToBasket(productId: product.id, basketCount: 1)
             showAlert(title: "Success", message: "Product added to your basket.")

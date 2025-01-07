@@ -42,7 +42,7 @@ class FilterViewController: UIViewController, UISearchBarDelegate, UICollectionV
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "Filter"
-        label.font = FontManager.Heading1.regular
+        label.font = FontProvider.Heading1.regular
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -66,7 +66,7 @@ class FilterViewController: UIViewController, UISearchBarDelegate, UICollectionV
     private let sortByLabel: UILabel = {
         let label = UILabel()
         label.text = "Sort By"
-        label.font = FontManager.Heading3.medium
+        label.font = FontProvider.Heading3.medium
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -74,7 +74,7 @@ class FilterViewController: UIViewController, UISearchBarDelegate, UICollectionV
     private let brandLabel: UILabel = {
         let label = UILabel()
         label.text = "Brand"
-        label.font = FontManager.Heading3.medium
+        label.font = FontProvider.Heading3.medium
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -99,7 +99,7 @@ class FilterViewController: UIViewController, UISearchBarDelegate, UICollectionV
     private let modelLabel: UILabel = {
         let label = UILabel()
         label.text = "Model"
-        label.font = FontManager.Heading3.medium
+        label.font = FontProvider.Heading3.medium
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -127,7 +127,7 @@ class FilterViewController: UIViewController, UISearchBarDelegate, UICollectionV
         button.backgroundColor = ThemeManager.primaryColor
         button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = ThemeManager.CornerRadius.medium.rawValue
-        button.titleLabel?.font = FontManager.Body1.semibold
+        button.titleLabel?.font = FontProvider.Body1.semibold
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -275,7 +275,7 @@ class FilterViewController: UIViewController, UISearchBarDelegate, UICollectionV
         button.setImage(UIImage(systemName: "circle.fill"), for: .selected)
         button.setTitle("  \(title)", for: .normal)
         button.setTitleColor(.label, for: .normal)
-        button.titleLabel?.font = FontManager.Body1.regular
+        button.titleLabel?.font = FontProvider.Body1.regular
         button.tintColor = ThemeManager.primaryColor
         button.contentHorizontalAlignment = .left
         button.addTarget(self, action: #selector(radioButtonTapped(_:)), for: .touchUpInside)
