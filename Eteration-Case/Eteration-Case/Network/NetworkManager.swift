@@ -9,15 +9,15 @@ import Foundation
 
 // MARK: - NetworkManager Class
 class NetworkManager: NetworkManagerProtocol {
-    
+
     static let shared = NetworkManager()
     private let session: URLSession
 
     private init() {
-        let configuration = URLSessionConfiguration.default
-        configuration.timeoutIntervalForRequest = 30
-        configuration.timeoutIntervalForResource = 60
-        self.session = URLSession(configuration: configuration)
+        let config = URLSessionConfiguration.default
+        config.timeoutIntervalForRequest = 30.0
+        config.timeoutIntervalForResource = 60.0
+        self.session = URLSession(configuration: config)
     }
 
     func request<T: Decodable, V: URLRequestable>(
@@ -26,12 +26,12 @@ class NetworkManager: NetworkManagerProtocol {
         completion: @escaping (Result<T, NetworkError>) -> Void
     ) {
         do {
-            let urlRequest = try requestable.createURLRequest()
+            let request = try requestable.createURLRequest()
 
-            session.dataTask(with: urlRequest) { data, response, error in
+            session.dataTask(with: request) { data, response, error in
                 if let error = error {
                     completion(.failure(.unknownError))
-                    print("Error: \(error.localizedDescription)")
+                    print("Request failed with error: \(error.localizedDescription)")
                     return
                 }
 
@@ -40,7 +40,7 @@ class NetworkManager: NetworkManagerProtocol {
                     return
                 }
 
-                guard (200...299).contains(httpResponse.statusCode) else {
+                guard 200...299 ~= httpResponse.statusCode else {
                     completion(.failure(.serverError(httpResponse.statusCode)))
                     return
                 }
@@ -51,8 +51,8 @@ class NetworkManager: NetworkManagerProtocol {
                 }
 
                 do {
-                    let decodedObject = try JSONDecoder().decode(T.self, from: data)
-                    completion(.success(decodedObject))
+                    let decodedData = try JSONDecoder().decode(T.self, from: data)
+                    completion(.success(decodedData))
                 } catch let decodingError {
                     completion(.failure(.decodingError(decodingError)))
                 }
