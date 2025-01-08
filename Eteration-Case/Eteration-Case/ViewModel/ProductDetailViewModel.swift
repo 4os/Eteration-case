@@ -17,28 +17,30 @@ class ProductDetailViewModel {
     var onErrorOccurred: ((String) -> Void)?
 
     func fetchProduct(by id: String) {
-        setLoadingState(true)
+        updateLoadingState(true)
 
         let request = GetProductByIdRequest(page: 1, limit: 1, id: id)
 
         NetworkManager.shared.request(requestable: request, responseType: ProductModel.self) { [weak self] result in
             guard let self = self else { return }
 
-            self.setLoadingState(false)
+            self.updateLoadingState(false)
 
             switch result {
             case .success(let product):
                 self.product = product
                 self.onProductFetched?(product)
             case .failure(let error):
-                let errorMessage = "Failed to fetch product: \(error.localizedDescription)"
+                let errorMessage = "Unable to fetch product: \(error.localizedDescription)"
                 self.errorMessage = errorMessage
                 self.onErrorOccurred?(errorMessage)
             }
         }
     }
 
-    private func setLoadingState(_ isLoading: Bool) {
+    /// Updates the loading state and notifies listeners.
+    /// - Parameter isLoading: The current loading state.
+    private func updateLoadingState(_ isLoading: Bool) {
         self.isLoading = isLoading
         self.onLoadingStateChanged?(isLoading)
     }

@@ -9,7 +9,7 @@ import Foundation
 
 class FilterViewModel {
 
-    // MARK: - Properties ///
+    // MARK: - Properties
     let sortOptions: [SortModel] = [.date(.asc), .date(.desc), .price(.desc), .price(.asc)]
     let brandOptions = [
         "Lamborghini", "Smart", "Ferrari", "Volkswagen", "Mercedes Benz",
@@ -26,15 +26,11 @@ class FilterViewModel {
         "Explorer", "Element", "Charger", "Silverado", "LeBaron",
         "Challenger", "XTS", "Volt", "Altima", "Golf"
     ]
-
     private(set) var filteredBrandOptions: [String]
     private(set) var filteredModelOptions: [String]
-
     private(set) var selectedSortOption: SortModel?
     private(set) var selectedBrands: Set<String> = []
     private(set) var selectedModels: Set<String> = []
-
-    // MARK: - Callbacks
     var onUpdate: (() -> Void)?
 
     // MARK: - Initialization
@@ -74,6 +70,16 @@ class FilterViewModel {
 
     func selectSortOption(_ option: String) {
         selectedSortOption = sortOptions.first(where: { $0.getDescription() == option })
+        onUpdate?()
+    }
+}
+
+// MARK: - Helpers (Eklenebilir)
+extension FilterViewModel {
+    func resetFilters() {
+        selectedBrands.removeAll()
+        selectedModels.removeAll()
+        selectedSortOption = nil
         onUpdate?()
     }
 }
