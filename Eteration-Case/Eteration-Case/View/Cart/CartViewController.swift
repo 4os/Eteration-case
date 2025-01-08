@@ -107,7 +107,7 @@ class CartViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         setupBindings()
-        viewModel.loadCartProducts()
+        viewModel.loadCartItems()
         title = "Cart"
     }
 

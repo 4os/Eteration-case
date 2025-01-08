@@ -10,7 +10,6 @@ import Foundation
 class FilterViewModel {
 
     // MARK: - Properties ///
-//    let sortOptions: [SortModel] = ["Old to new", "New to old", "Price high to low", "Price low to High"]
     let sortOptions: [SortModel] = [.date(.asc), .date(.desc), .price(.desc), .price(.asc)]
     let brandOptions = [
         "Lamborghini", "Smart", "Ferrari", "Volkswagen", "Mercedes Benz",

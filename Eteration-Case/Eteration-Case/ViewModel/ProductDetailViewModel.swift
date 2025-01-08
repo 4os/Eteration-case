@@ -8,17 +8,14 @@
 import Foundation
 
 class ProductDetailViewModel {
-    // MARK: - Properties
     private(set) var product: ProductModel?
     private(set) var isLoading: Bool = false
     private(set) var errorMessage: String?
 
-    // MARK: - Callbacks
     var onProductFetched: ((ProductModel) -> Void)?
     var onLoadingStateChanged: ((Bool) -> Void)?
     var onErrorOccurred: ((String) -> Void)?
 
-    // MARK: - Methods
     func fetchProduct(by id: String) {
         setLoadingState(true)
 

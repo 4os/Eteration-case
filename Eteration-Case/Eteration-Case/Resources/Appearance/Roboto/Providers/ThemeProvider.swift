@@ -9,12 +9,12 @@ import UIKit
 
 enum ThemeManager {
     
-    // Primary Colors
+    // Core Colors
     static let primaryColor: UIColor = UIColor(hex: "#2A59FE")
     static let secondaryColor: UIColor = UIColor(hex: "#D9D9D9")
     static let alertColor: UIColor = UIColor(hex: "#F90000")
     
-    // Background Colors
+    // Background Shades
     static let backgroundColor: UIColor = UIColor.systemBackground
     static let secondaryContainterColor: UIColor = UIColor(hex: "#C4C4C4")
     

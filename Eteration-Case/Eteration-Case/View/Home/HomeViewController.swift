@@ -226,6 +226,7 @@ extension HomeViewController: HomeViewModelDelegate {
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
             print("Filtered Products Displayed on UI: \(self.viewModel.filteredProducts)")
+
             self.collectionView.reloadData()
         }
     }

@@ -20,49 +20,49 @@ class CartViewModel {
     weak var delegate: CartViewModelDelegate?
 
     init() {
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadCart), name: .cartUpdated, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(updateCounts), name: .countChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadCartData), name: .cartUpdated, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshCartCounts), name: .countChanged, object: nil)
     }
 
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
 
-    private func setLoadingState(_ isLoading: Bool) {
+    private func updateLoadingState(_ isLoading: Bool) {
         delegate?.didChangeLoadingState(isLoading: isLoading)
     }
 
-    @objc private func reloadCart() {
-        loadCartProducts()
+    @objc private func reloadCartData() {
+        loadCartItems()
     }
 
-    func loadCartProducts() {
-        setLoadingState(true)
-        let cartItems = cartManager.fetchCartItems()
-        cartCounts = Dictionary(uniqueKeysWithValues: cartItems.compactMap { ($0.id ?? "", Int($0.cartCount)) })
+    func loadCartItems() {
+        updateLoadingState(true)
+        let items = cartManager.fetchCartItems()
+        cartCounts = Dictionary(uniqueKeysWithValues: items.compactMap { ($0.id ?? "", Int($0.cartCount)) })
 
-        let ids = cartItems.compactMap { $0.id }.sorted()
-        let dispatchGroup = DispatchGroup()
-        var fetchedProducts: [ProductModel] = []
+        let productIDs = items.compactMap { $0.id }.sorted()
+        let group = DispatchGroup()
+        var retrievedProducts: [ProductModel] = []
 
-        for id in ids {
-            dispatchGroup.enter()
-            let request = GetProductByIdRequest(page: 1, limit: 1, id: id)
+        for productID in productIDs {
+            group.enter()
+            let request = GetProductByIdRequest(page: 1, limit: 1, id: productID)
             NetworkManager.shared.request(requestable: request, responseType: ProductModel.self) { result in
                 switch result {
                 case .success(let product):
-                    fetchedProducts.append(product)
+                    retrievedProducts.append(product)
                 case .failure(let error):
-                    print("Failed to fetch product with ID \(id): \(error)")
+                    print("Error loading product with ID \(productID): \(error)")
                 }
-                dispatchGroup.leave()
+                group.leave()
             }
         }
 
-        dispatchGroup.notify(queue: .main) {
-            self.products = fetchedProducts.sorted { $0.id < $1.id }
-            self.calculateTotalPrice()
-            self.setLoadingState(false)
+        group.notify(queue: .main) {
+            self.products = retrievedProducts.sorted { $0.id < $1.id }
+            self.calculateTotal()
+            self.updateLoadingState(false)
             self.onProductsUpdated?()
         }
     }
@@ -70,28 +70,28 @@ class CartViewModel {
     func increaseProductCount(for id: String) {
         DispatchQueue.main.async {
             self.cartManager.increaseCartCount(for: id)
-            self.updateCounts()
+            self.refreshCartCounts()
         }
     }
 
     func decreaseProductCount(for id: String) {
         DispatchQueue.main.async {
             self.cartManager.decreaseCartCount(for: id)
-            self.updateCounts()
+            self.refreshCartCounts()
         }
     }
 
-    @objc private func updateCounts() {
-        let cartItems = cartManager.fetchCartItems()
-        cartCounts = Dictionary(uniqueKeysWithValues: cartItems.compactMap { ($0.id ?? "", Int($0.cartCount)) })
-        self.calculateTotalPrice()
+    @objc private func refreshCartCounts() {
+        let items = cartManager.fetchCartItems()
+        cartCounts = Dictionary(uniqueKeysWithValues: items.compactMap { ($0.id ?? "", Int($0.cartCount)) })
+        self.calculateTotal()
         onProductsUpdated?()
     }
 
-    private func calculateTotalPrice() {
-        totalPrice = products.reduce(0) { result, product in
-            guard let count = cartCounts[product.id], let price = Double(product.price) else { return result }
-            return result + (Double(count) * price)
+    private func calculateTotal() {
+        totalPrice = products.reduce(0) { total, product in
+            guard let count = cartCounts[product.id], let price = Double(product.price) else { return total }
+            return total + (Double(count) * price)
         }
     }
 }
