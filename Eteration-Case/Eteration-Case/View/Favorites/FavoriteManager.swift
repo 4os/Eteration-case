@@ -10,32 +10,31 @@ import UIKit
 
 class FavoriteManager {
     static let shared = FavoriteManager()
-    private let context: NSManagedObjectContext
+    private let managedContext: NSManagedObjectContext
 
     private init() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            fatalError("Unable to get AppDelegate")
+            fatalError("AppDelegate couldn't be accessed")
         }
-        self.context = appDelegate.persistentContainer.viewContext
+        self.managedContext = appDelegate.persistentContainer.viewContext
     }
 
     func addToFavorites(productId: String) {
-        if isProductInFavorites(productId: productId) {
-            print("Product is already in favorites")
+        guard !isProductInFavorites(productId: productId) else {
+            print("Product already exists in favorites")
             return
         }
-        let favorite = FavoriteItem(context: context)
-        favorite.id = productId
+        let favoriteItem = FavoriteItem(context: managedContext)
+        favoriteItem.id = productId
         NotificationCenter.default.post(name: .favoritesUpdated, object: nil)
-        saveContext()
+        saveChanges()
     }
 
     func removeFromFavorites(productId: String) {
-        if let favoriteItem = fetchFavoriteItem(by: productId) {
-            context.delete(favoriteItem)
-            saveContext()
+        if let itemToDelete = fetchFavoriteItem(by: productId) {
+            managedContext.delete(itemToDelete)
+            saveChanges()
 
-            // Notification gönder
             NotificationCenter.default.post(name: .favoritesUpdated, object: nil)
         }
     }
@@ -43,9 +42,9 @@ class FavoriteManager {
     func getAllFavoriteItems() -> [FavoriteItem] {
         let fetchRequest: NSFetchRequest<FavoriteItem> = FavoriteItem.fetchRequest()
         do {
-            return try context.fetch(fetchRequest)
+            return try managedContext.fetch(fetchRequest)
         } catch {
-            print("Failed to fetch favorites: \(error)")
+            print("Error while fetching favorite items: \(error)")
             return []
         }
     }
@@ -54,18 +53,18 @@ class FavoriteManager {
         let fetchRequest: NSFetchRequest<FavoriteItem> = FavoriteItem.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id == %@", productId)
         do {
-            return try context.fetch(fetchRequest).first
+            return try managedContext.fetch(fetchRequest).first
         } catch {
-            print("Failed to fetch favorite item: \(error)")
+            print("Error fetching specific favorite item: \(error)")
             return nil
         }
     }
 
-    private func saveContext() {
+    private func saveChanges() {
         do {
-            try context.save()
+            try managedContext.save()
         } catch {
-            print("Failed to save context: \(error)")
+            print("Error while saving context: \(error)")
         }
     }
 
