@@ -148,7 +148,9 @@ class HomeViewController: UIViewController {
 
         dataSource.onScrollReachedEnd = { [weak self] in
             guard let self = self else { return }
-            self.viewModel.handleScrollReachedEnd(searchQuery: self.searchBar.text)
+            DispatchQueue.main.async {
+                self.viewModel.handleScrollReachedEnd(searchQuery: self.searchBar.text)
+            }
         }
 
         viewModel.fetchProducts()
@@ -216,7 +218,7 @@ class HomeViewController: UIViewController {
 extension HomeViewController: HomeViewModelDelegate {
     func didChangeEmptyState(isEmpty: Bool) {
         DispatchQueue.main.async { [weak self] in
-            guard let self else { return }
+            guard let self = self else { return }
             self.emptyStateView.isHidden = !isEmpty
             self.collectionView.isHidden = isEmpty
         }
@@ -224,9 +226,7 @@ extension HomeViewController: HomeViewModelDelegate {
 
     func didUpdateProducts() {
         DispatchQueue.main.async { [weak self] in
-            guard let self else { return }
-            print("Filtered Products Displayed on UI: \(self.viewModel.filteredProducts)")
-
+            guard let self = self else { return }
             self.collectionView.reloadData()
         }
     }
@@ -292,9 +292,11 @@ extension HomeViewController: FilterDelegate {
 
 extension HomeViewController: HomeDataSourceDelegate {
     func didSelectProduct(_ product: ProductModel) {
-        let detailVC = ProductDetailViewController()
-        detailVC.product = product
-        navigationController?.pushViewController(detailVC, animated: true)
+        DispatchQueue.main.async { [weak self] in
+            let detailVC = ProductDetailViewController()
+            detailVC.product = product
+            self?.navigationController?.pushViewController(detailVC, animated: true)
+        }
     }
 
     func didTapAddToCart(_ product: ProductModel) {
@@ -312,5 +314,3 @@ extension HomeViewController: HomeDataSourceDelegate {
         present(alert, animated: true)
     }
 }
-
-
