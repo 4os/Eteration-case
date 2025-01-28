@@ -10,7 +10,6 @@ Welcome to the Eteration Case Study app, a Swift-based e-commerce application bu
 https://github.com/user-attachments/assets/7597faa3-797c-4bcd-b639-7b3545df4457
 
 
-
 ---
 
 ## Project Features
